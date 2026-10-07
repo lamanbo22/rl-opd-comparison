@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "stage": "single_local_gpu_five_method_study",
+  "hardware": {
+    "gpu_count": 1,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "remote_compute_allowed": false,
+    "jobs_run_sequentially": true,
+    "distributed_world_size": 1
+  },
+  "source_config_sha256": "3e1b74a74518305221137630afbf16fb827e7ab4e377e01a04d4f06a4c133831",
+  "source_verl_protocol_sha256": "7c8cfe79b51509d30a61f141de1671bd6256e2442402653a4058f93c77611840",
+  "methods": [
+    "rl",
+    "opd",
+    "joint",
+    "opd_then_rl",
+    "rl_then_opd"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed_meaning": "Different training-data shuffles and generation RNG; one common frozen initial adapter, not independent adapter initializations.",
+  "budget_seconds": 7200,
+  "reserve_seconds": 480,
+  "endpoint_policy": "guarded_ceiling",
+  "overrun_tolerance_fraction": 0.0,
+  "budget_scope": "Common upper training-time allowance on one local GPU; not identical FLOPs or identical consumed time.",
+  "budget_charge": "Contiguous committed-batch elapsed time: snapshots, data selection, generation, reward, old-student/teacher scoring, signals, backward/update, evidence, native checkpoint and checksums.",
+  "separate_costs": "Initial/restart loading and audits; final verification/export; completion-marker/rename/pointer/pruning/log tails; evaluation. Record actual whole-job costs separately.",
+  "unclean_interruption": "Unknown uncommitted work makes a resumed budgeted run ineligible for formal comparison; clean boundary pause/resume preserves eligibility.",
+  "switch_rule": "Sequential methods switch before the next batch after the first committed boundary at or above half the common allowance. Preserve Adam moments, constant LR, model and data cursor; report actual phase shares.",
+  "prompts_per_iteration": 4,
+  "answers_per_prompt": 4,
+  "joint_coefficient": 1.0,
+  "data_order": "Per-seed deterministic full-pool shuffle; consume fresh on-policy question batches; reshuffle on exhaustion.",
+  "evaluation": {
+    "before_training": "Initial student and teacher on all512frozen dev rows",
+    "intermediate": "Same first64dev questions at the half-budget checkpoint, outside training clock",
+    "endpoint": "All512dev questions at the predetermined eligible final checkpoint",
+    "official_test": "All1319test questions for each15finaladapter and initialstudent after protocol frozen; no test access during this preparation stage",
+    "selection": "No best-checkpoint selection or method-specific tuning from endpoint scores",
+    "decode": "Greedy, non-thinking, cap1024newtokens, batch4, frozen rewardv3"
+  },
+  "milestone_fractions": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "research_claim": "Best among five declared configurations on this student/teacher/task under a common local training-time allowance; no universal or hyperparameter-optimized winner claim.",
+  "calibration": {
+    "normal_batch_max_seconds": 137.11398029699922,
+    "stress_batch_seconds": 350.8647258819983,
+    "stress_peak_torch_allocated_gib": 17.29946756362915,
+    "reserve_rule": "ceil_to_60(max(300,2*maximum_normal_batch_seconds,1.25*stress_batch_seconds+30))",
+    "normal_source_sha256": {
+      "runs/verl_pilot_rl_01/metrics.jsonl": "d93a33574a7b21472e08ebb89e50be105fbdb416a3a4ced9d83f33451571922e",
+      "runs/verl_pilot_opd_01/metrics.jsonl": "444823aef40b29d76e63fb5d25bb3242abfd66f218609cec8a59c07c1f5347a7",
+      "runs/verl_pilot_joint_01/metrics.jsonl": "aa18abaa4bef89b08bf7d0b295ab93bbba4e84b50ace294dd2bfc1c68784afa7"
+    },
+    "stress_summary_sha256": "87376586a5073ac882632ce1d3882d798672d614fd9fe42ba12b7bc0f4718436",
+    "stress_is_accuracy_evidence": false,
+    "minimum_utilization_if_guard_stopped_and_valid": 0.9333333333333333,
+    "normal_max_scope": "Original three-arm calibration plus charged sequential-validation batches, including checkpoint/audit overhead.",
+    "normal_evidence": [
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_pilot_rl_01/metrics.jsonl",
+        "sha256": "d93a33574a7b21472e08ebb89e50be105fbdb416a3a4ced9d83f33451571922e"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_pilot_opd_01/metrics.jsonl",
+        "sha256": "444823aef40b29d76e63fb5d25bb3242abfd66f218609cec8a59c07c1f5347a7"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_pilot_joint_01/metrics.jsonl",
+        "sha256": "aa18abaa4bef89b08bf7d0b295ab93bbba4e84b50ace294dd2bfc1c68784afa7"
+      }
+    ],
+    "stress_evidence": {
+      "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_length_stress_01/summary.json",
+      "sha256": "87376586a5073ac882632ce1d3882d798672d614fd9fe42ba12b7bc0f4718436"
+    },
+    "computed_reserve_seconds": 480,
+    "not_a_proven_runtime_upper_bound": true
+  },
+  "frozen_at_utc": "2026-10-02T09:40:56.223956+00:00",
+  "pre_freeze_protocol_sha256": "041a4b0c6ecac36d34e49eb0d218511c72e7d00f0dc26d92ab84f664efa8eeb3",
+  "validation_protocol_sha256": "041a4b0c6ecac36d34e49eb0d218511c72e7d00f0dc26d92ab84f664efa8eeb3",
+  "freeze_script": {
+    "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/freeze_study_protocol.py",
+    "sha256": "24541262cc0dc8a4d4813820bb5f7404c8e283ac96c9632d9a428566ca35e49c"
+  },
+  "frozen_source_sha256": {
+    "verl_study/train_verl_study.py": "21368e2e35ae2353609bfab172659ca75aa16d49a709ff3ebc4d53f4df19bcb0",
+    "verl_study/study_schedule.py": "d40762b78f82896c2c151393e1c255edf1509d76b765ae90d570d50e3d92290b",
+    "verl/verl_engine_bridge.py": "97aa2e039416474841cfd82011c61cc5f7d75129d8be614a4d78926a6a1e0681",
+    "train_repeated_pilot.py": "759a76543ab6b68c2d849f6b020cb56fa3c0ebc7b7a1bc473fcbe001c818761b",
+    "one_rl_update.py": "4ae659c64a7722721d36676b2050bcb298907b9ccb2af62871ce7eb36903a68a",
+    "part2_methods.py": "0266c18c63ea32f731aea999026e1316d812a15c4f46a3530c4846297e2f8bd6",
+    "collect_rollouts_fixed.py": "4894317228ddcde3446e36087fbf81d79f7305b9228dd520f25316671163d115",
+    "configs/pilot.json": "3e1b74a74518305221137630afbf16fb827e7ab4e377e01a04d4f06a4c133831",
+    "configs/repeated_pilot_v1.json": "15fb8524d3912b23d28d7baaad6134e5e2787bf162cbb274488dd5f36801dd66",
+    "verl/protocol.json": "7c8cfe79b51509d30a61f141de1671bd6256e2442402653a4058f93c77611840",
+    "verl_study/protocol_validation.json": "041a4b0c6ecac36d34e49eb0d218511c72e7d00f0dc26d92ab84f664efa8eeb3",
+    "reward/text_reward.py": "36f9f9dde01684527743bc570d8300757932868c268f4e0c8609244a2806c6f3",
+    "reward/text_answer_reward.py": "fa4bc9ab357613dbb7c5f2fce9fb181d809df319c2a8d74beea6361871c27e1e",
+    "verl_study/evaluate_verl_study.py": "c1102f7db9603371c5994516db92eb81bd4be9ddf147ef2e0f38805a74426347"
+  },
+  "frozen_versions": {
+    "accelerate": "1.14.0",
+    "numpy": "2.3.5",
+    "nvidia-cublas": "13.1.1.3",
+    "nvidia-cuda-cccl": "13.3.3.4.1",
+    "nvidia-cuda-crt": "13.3.73",
+    "nvidia-cuda-cupti": "13.0.85",
+    "nvidia-cuda-nvcc": "13.2.86",
+    "nvidia-cuda-nvdisasm": "13.4.92",
+    "nvidia-cuda-nvrtc": "13.0.88",
+    "nvidia-cuda-runtime": "13.0.96",
+    "nvidia-cudnn-cu13": "9.20.0.48",
+    "nvidia-cudnn-frontend": "1.26.0",
+    "nvidia-cufft": "12.0.0.61",
+    "nvidia-cufile": "1.15.1.6",
+    "nvidia-curand": "10.4.0.35",
+    "nvidia-cusolver": "12.0.4.66",
+    "nvidia-cusparse": "12.6.3.3",
+    "nvidia-cusparselt-cu13": "0.8.1",
+    "nvidia-cutlass-dsl": "4.6.2",
+    "nvidia-cutlass-dsl-libs-base": "4.6.2",
+    "nvidia-cutlass-dsl-libs-core": "4.6.2",
+    "nvidia-cutlass-dsl-libs-cu12": "4.6.2",
+    "nvidia-cutlass-dsl-libs-cu13": "4.6.2",
+    "nvidia-ml-py": "13.610.43",
+    "nvidia-nccl-cu13": "2.29.7",
+    "nvidia-nvjitlink": "13.0.88",
+    "nvidia-nvshmem-cu13": "3.4.5",
+    "nvidia-nvtx": "13.0.85",
+    "nvidia-nvvm": "13.2.86",
+    "peft": "0.19.1",
+    "ray": "2.55.1",
+    "safetensors": "0.8.0",
+    "tensordict": "0.10.0",
+    "tokenizers": "0.22.2",
+    "torch": "2.13.0+cu130",
+    "transformers": "5.12.1",
+    "triton": "3.7.1",
+    "verl": "0.10.0.dev0",
+    "vllm": "0.29.0"
+  },
+  "frozen_python_version": "3.12.3",
+  "frozen_python_executable": "/home/enci/project/rl_opd_comparison/.venv-verl/bin/python",
+  "frozen_verl_commit": "8718ca30a3f002f93b7c4fd99b9b2506718681bc",
+  "frozen_verl_tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "frozen_verl_tracked_state_clean": true,
+  "run_order": {
+    "randomization_seed": 20261002,
+    "python_version": "3.12.3",
+    "algorithm": "Randomly permute method labels and seed blocks; choose three distinct cyclic offsets without replacement.",
+    "balance": "Every method occurs once per seed block and at three different within-block positions. Three seeds cannot give complete five-position Latin-square balance.",
+    "order_must_not_depend_on_scores": true,
+    "runs": [
+      {
+        "order": 1,
+        "block": 1,
+        "position_within_block": 1,
+        "seed": 42,
+        "method": "rl",
+        "name": "verl_study_rl_seed42_01"
+      },
+      {
+        "order": 2,
+        "block": 1,
+        "position_within_block": 2,
+        "seed": 42,
+        "method": "opd_then_rl",
+        "name": "verl_study_opd_then_rl_seed42_01"
+      },
+      {
+        "order": 3,
+        "block": 1,
+        "position_within_block": 3,
+        "seed": 42,
+        "method": "joint",
+        "name": "verl_study_joint_seed42_01"
+      },
+      {
+        "order": 4,
+        "block": 1,
+        "position_within_block": 4,
+        "seed": 42,
+        "method": "rl_then_opd",
+        "name": "verl_study_rl_then_opd_seed42_01"
+      },
+      {
+        "order": 5,
+        "block": 1,
+        "position_within_block": 5,
+        "seed": 42,
+        "method": "opd",
+        "name": "verl_study_opd_seed42_01"
+      },
+      {
+        "order": 6,
+        "block": 2,
+        "position_within_block": 1,
+        "seed": 44,
+        "method": "rl_then_opd",
+        "name": "verl_study_rl_then_opd_seed44_01"
+      },
+      {
+        "order": 7,
+        "block": 2,
+        "position_within_block": 2,
+        "seed": 44,
+        "method": "opd",
+        "name": "verl_study_opd_seed44_01"
+      },
+      {
+        "order": 8,
+        "block": 2,
+        "position_within_block": 3,
+        "seed": 44,
+        "method": "rl",
+        "name": "verl_study_rl_seed44_01"
+      },
+      {
+        "order": 9,
+        "block": 2,
+        "position_within_block": 4,
+        "seed": 44,
+        "method": "opd_then_rl",
+        "name": "verl_study_opd_then_rl_seed44_01"
+      },
+      {
+        "order": 10,
+        "block": 2,
+        "position_within_block": 5,
+        "seed": 44,
+        "method": "joint",
+        "name": "verl_study_joint_seed44_01"
+      },
+      {
+        "order": 11,
+        "block": 3,
+        "position_within_block": 1,
+        "seed": 43,
+        "method": "opd_then_rl",
+        "name": "verl_study_opd_then_rl_seed43_01"
+      },
+      {
+        "order": 12,
+        "block": 3,
+        "position_within_block": 2,
+        "seed": 43,
+        "method": "joint",
+        "name": "verl_study_joint_seed43_01"
+      },
+      {
+        "order": 13,
+        "block": 3,
+        "position_within_block": 3,
+        "seed": 43,
+        "method": "rl_then_opd",
+        "name": "verl_study_rl_then_opd_seed43_01"
+      },
+      {
+        "order": 14,
+        "block": 3,
+        "position_within_block": 4,
+        "seed": 43,
+        "method": "opd",
+        "name": "verl_study_opd_seed43_01"
+      },
+      {
+        "order": 15,
+        "block": 3,
+        "position_within_block": 5,
+        "seed": 43,
+        "method": "rl",
+        "name": "verl_study_rl_seed43_01"
+      }
+    ]
+  },
+  "evidence_provenance": {
+    "combined_audit": {
+      "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/verl_study_audit.json",
+      "sha256": "fcdd822ecd02a6d3204e2d6643d7286c4664b06fcf33d2756418e4e398285f1b"
+    },
+    "controller_cpu_test_report": {
+      "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/study_controller_cpu_test.log",
+      "sha256": "9021c54e890e3eba479ee97807a10bf4282657f71f2dfe1775da377acd38df3c"
+    },
+    "controller_cpu_test_source": {
+      "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/test_study_controller_cpu.py",
+      "sha256": "c2d5f667924c8953268075b5e8c700afd936ad74ffe2c1dbbc41b2798d9bccfa"
+    },
+    "auditors": [
+      {
+        "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/audit_verl_study.py",
+        "sha256": "718566d0520cc20a5be935091fa4c67be49f1ca40534f96b28f7f84e39dc0f24"
+      },
+      {
+        "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/audit_verl_study_baselines.py",
+        "sha256": "f2da172cff8154baf6df77b32ce59ef012e70ac7e82723cda95b866947f68da3"
+      },
+      {
+        "path": "/mnt/c/Users/Admin/Documents/Codex/2026-09-30/this-is-the-project-i-going/work/audit_verl_pilot.py",
+        "sha256": "99c4b1e6350948131287d841aaf82b0bbef0bc212e1825f9ebf6df0c8a605931"
+      }
+    ],
+    "run_evidence": [
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_student_dev_01/summary.json",
+        "sha256": "beb4112a6f16e638f9bb296e8210ae543435edeb09b30d0fecaaaeefce68b571"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_student_dev_01/metadata.json",
+        "sha256": "4ab006d9f1e7f844e4481cf5c124a3688216f2ca1a1d043e8d6231cda32b9457"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_student_dev_01/responses.jsonl",
+        "sha256": "ba8eb28a422ef6a460387f2dbb0d05b7c8e7baf25d7b36741c45c8e8bc7f8714"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_student_dev_01/initial_weights.json",
+        "sha256": "837489c90ee29cb8b77aa178b0dbd765a8c96a9a5fa7828f8bb82099fa3118e4"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_teacher_dev_01/summary.json",
+        "sha256": "5e7541e6d3206c961f0129996ee9b983973ba6c3176a219d5ac811fbd24f7076"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_teacher_dev_01/metadata.json",
+        "sha256": "359881fe1b88965072a0fd9daa26f89c1b3c6c0c80ac26b154ed01965d45b018"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_teacher_dev_01/responses.jsonl",
+        "sha256": "d2280f7a4594df9b9beb0d74bcebc73c4ff2f88977aff705759bc1faf24b4af5"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_teacher_dev_01/initial_weights.json",
+        "sha256": "e8c8e2bce18f6508e21d0d288ab84e65579beecf34e12b18d5695aafdde93a10"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_opd_then_rl_check_01/summary.json",
+        "sha256": "3ae7690aa0dfdf14c65579836bec19487b42e76de8025e82d2869335ae829956"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_opd_then_rl_check_01/metadata.json",
+        "sha256": "32bcb02bebe1fc013686da58be2b7d19ee2bd46002e96dd559ac5dbb48b700ef"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_opd_then_rl_check_01/metrics.jsonl",
+        "sha256": "29b043c8c80f93d60ce6c016d016ac5c267fbe6381530fa54d7d6bed1ca8dc0a"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_opd_then_rl_check_01/sessions.jsonl",
+        "sha256": "3aa4d1396fd763c3c33d1f80e78ad3e4296ab090e6f4ef51c1b95f99658d1de7"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_opd_then_rl_check_01/checkpoint_selections.json",
+        "sha256": "826fa31c217ae48a4a0d926538d09a360684a9cb7d8210c1ed28ab189d90cb60"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_rl_then_opd_check_01/summary.json",
+        "sha256": "36cdac50cbe84bad2ac4aac589ee8c90f54bc588e952d39034b83511bb779a83"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_rl_then_opd_check_01/metadata.json",
+        "sha256": "5993d6b7ac6c0b8c1454f110e34445d59c0f292aa7ad3da777aa68acac5c18d2"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_rl_then_opd_check_01/metrics.jsonl",
+        "sha256": "f60b0ca84e35feb974770017886aca226d5ae5b2f221debbc764637fba62a0bf"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_rl_then_opd_check_01/sessions.jsonl",
+        "sha256": "17cb152ca9ab42d61c41e1c55710d61c97c4f7a2919aaf16267344d30966666f"
+      },
+      {
+        "path": "/home/enci/project/rl_opd_comparison/experiments/runs/verl_study_rl_then_opd_check_01/checkpoint_selections.json",
+        "sha256": "0bbdb0a18b7c4a293bec84e79f47b0bcf16ee0294354aaf2b54ef57f02b39c23"
+      }
+    ],
+    "all_required_audits_passed": true,
+    "official_test_files_read_by_freeze_script": false
+  },
+  "models_and_initialization": {
+    "models": {
+      "student": {
+        "id": "Qwen/Qwen3-1.7B",
+        "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        "local_snapshot": "/home/enci/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+      },
+      "teacher": {
+        "id": "Qwen/Qwen3-4B",
+        "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+        "local_snapshot": "/home/enci/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c"
+      }
+    },
+    "initial_adapter_path": "/home/enci/project/rl_opd_comparison/experiments/runs/pilot_train_rl_01/adapter_initial",
+    "initial_adapter_file_sha256": "41f5b090f3d0037006ebf9aac6b4eacec2b5eea8df1c0f09646cad88114db92b",
+    "initial_adapter_seed": 42,
+    "same_initial_adapter_all_runs": true,
+    "seed_variation": "Training-data order and rollout sampling only; initial adapter is held fixed.",
+    "audited_baseline_model_file_sha256": {
+      "student": {
+        "config.json": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "model-00001-of-00002.safetensors": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5",
+        "model-00002-of-00002.safetensors": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9",
+        "model.safetensors.index.json": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "teacher": {
+        "config.json": "8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "model-00001-of-00003.safetensors": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+        "model-00002-of-00003.safetensors": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+        "model-00003-of-00003.safetensors": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1",
+        "model.safetensors.index.json": "6dc0981b8829fead746441f68f38f24c5ca4a3a66351f652c26c6df0efc43ab2",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    }
+  },
+  "statistical_analysis": {
+    "primary_outcome": "Exact frozen reward-v3 answer accuracy on all 1,319 official test questions at each valid predetermined final endpoint.",
+    "method_summary": "Arithmetic mean of the three seed accuracies; show all seed counts/accuracies, sample standard deviation (ddof=1) and minimum/maximum. Do not pool seeds as if they were independent questions.",
+    "baseline": "One frozen initial-student greedy evaluation, using the same official-test questions and decoding.",
+    "paired_comparisons": "Report all ten pairwise method differences in mean accuracy, plus differences from the initial student. Preserve matched training-seed labels and question identities.",
+    "bootstrap": {
+      "replicates": 20000,
+      "seed": 20261003,
+      "method": "Crossed paired resampling: draw three seed labels with replacement and draw N question indices with replacement, independently; use the same seed and question draws for every method. Compute means over the resulting seed-by-question matrix. For the single initial baseline, reuse its sampled question vector for every sampled seed.",
+      "interval": "2.5th and 97.5th percentiles of paired differences, labeled descriptive unadjusted 95-percent bootstrap intervals.",
+      "limitations": "Only three training seeds give coarse and unstable estimates of seed variation. Bootstrap intervals do not guarantee nominal coverage, do not cover untested hyperparameters or models, and ten pairwise comparisons are not multiplicity-adjusted confirmatory tests."
+    },
+    "ranking_rule": "Rank tested configurations by mean accuracy descriptively. If paired uncertainty and seed variation do not clearly separate methods, report the result as inconclusive rather than declaring the largest mean a unique winner.",
+    "selection_rule": "Use the guarded time-selected endpoint; never choose a checkpoint, seed, method-specific learning rate or schedule from endpoint/test scores.",
+    "secondary_outcomes": "All-512 development accuracy, fixed halfway-64 dev accuracy, actual charged time and unused allowance, phase shares, optimizer updates, examples and tokens, format/truncation rates, and separately recorded full resource costs.",
+    "failed_runs": "Preserve all costs and failure records. Budget-invalid or unclean resumed jobs cannot enter formal accuracy comparisons. Do not replace a run based on its score; any technical replacement follows the same seed/config and is separately identified. Do not rank methods with missing planned seeds."
+  },
+  "budget_interpretation": {
+    "primary": "Common upper allowance for declared single-GPU training work, including rollout, teacher work and optimization. This is not exact equality of consumed time or FLOPs.",
+    "valid_guard_stop_training_seconds": {
+      "exclusive_lower": 6720,
+      "inclusive_upper": 7200
+    },
+    "separate_resource_costs": "Initialization/restart, final export and verification, declared commit tails and evaluation remain outside the primary training clock and must be included in the actual total project-resource ledger.",
+    "equal_total_goal_limit": "Because unused allowance and separate costs vary, this protocol does not claim identical end-to-end total job cost. It compares five fixed configurations under the same practical training allowance.",
+    "phase_allocation": "Switch at half the common allowance; the first phase can exceed half of actually consumed time because of batch boundaries and guarded stopping. Report realized phase shares.",
+    "formal_execution_authorized_by_this_freeze": false
+  },
+  "resource_plan": {
+    "basis": "Completed full-512 initial-student generation and session measurements. Scaling to changed policies/test questions is a planning extrapolation, not a throughput guarantee or confidence interval.",
+    "measured_student_512_generation_seconds": 844.1360351179646,
+    "measured_teacher_512_generation_seconds": 721.3744026250279,
+    "measured_student_known_session_seconds": 856.3085744769996,
+    "measured_teacher_known_session_seconds": 734.3089445910009,
+    "measured_student_session_plus_preparation_recovery_seconds": 866.9507283100029,
+    "measured_teacher_session_plus_preparation_recovery_seconds": 744.3127519139962,
+    "student_seconds_per_question": 1.6487031935897747,
+    "student_mean_session_overhead_seconds": 11.407346596019124,
+    "formal_training_allowance_seconds": 108000,
+    "formal_training_valid_guard_stop_lower_bound_seconds_exclusive": 100800,
+    "estimated_15_final_dev_seconds": 12833.150725709756,
+    "estimated_15_halfway_64_dev_seconds": 1753.8652647864706,
+    "estimated_16_official_test_seconds": 34976.74974305491,
+    "official_test_evaluations": "Fifteen final adapters and one initial student; test contents remain unread during freezing.",
+    "known_current_preparation_session_seconds": 2320.347860347996,
+    "remaining_main_study_point_estimate_hours_before_training_setup_and_final_exports": 43.7677127037642,
+    "including_known_current_preparation_point_estimate_hours_before_unmeasured_overheads": 44.41225377608309,
+    "excluded_or_unmeasured": "Future training setup/restart and final-export costs, additional CPU audit/report time, invalid jobs/replacements, and interruptions. Actual whole-job resource use is reported separately. Measured preparation totals can omit small process-start/final-write tails; earlier project prototypes are outside this current-preparation-plus-formal-study projection."
+  }
+}

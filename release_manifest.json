@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "study_date": "2026-10-02",
+  "release_kind": "frozen-source-and-numerical-results",
+  "source_and_configuration_bytes_unchanged": true,
+  "historical_configuration_paths_preserved": true,
+  "original_artifacts_modified": false,
+  "bundled": {
+    "source": true,
+    "cpu_tests": true,
+    "numerical_tables": true,
+    "readme": false,
+    "prose_reports": false,
+    "raw_dataset": false,
+    "model_weights": false,
+    "initial_adapter": false,
+    "trained_checkpoints": false,
+    "raw_run_evidence": false
+  },
+  "training_requires_external_assets": true,
+  "forensic_analysis_requires_original_run_archive": true,
+  "upstream": {
+    "verl": {
+      "url": "https://github.com/verl-project/verl",
+      "commit": "8718ca30a3f002f93b7c4fd99b9b2506718681bc",
+      "vendored": false
+    }
+  },
+  "files": [
+    {
+      "path": "experiments/collect_rollouts_fixed.py",
+      "sha256": "4894317228ddcde3446e36087fbf81d79f7305b9228dd520f25316671163d115",
+      "origin": "completed-study",
+      "bytes": 10273
+    },
+    {
+      "path": "experiments/one_rl_update.py",
+      "sha256": "4ae659c64a7722721d36676b2050bcb298907b9ccb2af62871ce7eb36903a68a",
+      "origin": "completed-study",
+      "bytes": 16570
+    },
+    {
+      "path": "experiments/part2_methods.py",
+      "sha256": "0266c18c63ea32f731aea999026e1316d812a15c4f46a3530c4846297e2f8bd6",
+      "origin": "completed-study",
+      "bytes": 17135
+    },
+    {
+      "path": "experiments/train_repeated_pilot.py",
+      "sha256": "759a76543ab6b68c2d849f6b020cb56fa3c0ebc7b7a1bc473fcbe001c818761b",
+      "origin": "completed-study",
+      "bytes": 39391
+    },
+    {
+      "path": "experiments/reward/text_reward.py",
+      "sha256": "36f9f9dde01684527743bc570d8300757932868c268f4e0c8609244a2806c6f3",
+      "origin": "completed-study",
+      "bytes": 9513
+    },
+    {
+      "path": "experiments/reward/text_answer_reward.py",
+      "sha256": "fa4bc9ab357613dbb7c5f2fce9fb181d809df319c2a8d74beea6361871c27e1e",
+      "origin": "completed-study",
+      "bytes": 9202
+    },
+    {
+      "path": "experiments/verl/verl_engine_bridge.py",
+      "sha256": "97aa2e039416474841cfd82011c61cc5f7d75129d8be614a4d78926a6a1e0681",
+      "origin": "completed-study",
+      "bytes": 20890
+    },
+    {
+      "path": "experiments/verl/setup_verl.py",
+      "sha256": "7aa83ea4f32231207397583e033905a6e161d8f107ed11891083149012f29569",
+      "origin": "completed-study",
+      "bytes": 1774
+    },
+    {
+      "path": "experiments/verl/requirements-frozen.txt",
+      "sha256": "107d8a50978646299614d7d9bb17368ccf604047b3bbadaf4f72a6d1c66b8e95",
+      "origin": "completed-study",
+      "bytes": 5308
+    },
+    {
+      "path": "experiments/verl/protocol.json",
+      "sha256": "7c8cfe79b51509d30a61f141de1671bd6256e2442402653a4058f93c77611840",
+      "origin": "completed-study",
+      "bytes": 3092
+    },
+    {
+      "path": "experiments/configs/pilot.json",
+      "sha256": "3e1b74a74518305221137630afbf16fb827e7ab4e377e01a04d4f06a4c133831",
+      "origin": "completed-study",
+      "bytes": 2043
+    },
+    {
+      "path": "experiments/configs/repeated_pilot_v1.json",
+      "sha256": "15fb8524d3912b23d28d7baaad6134e5e2787bf162cbb274488dd5f36801dd66",
+      "origin": "completed-study",
+      "bytes": 1723
+    },
+    {
+      "path": "experiments/verl_study/train_verl_study.py",
+      "sha256": "21368e2e35ae2353609bfab172659ca75aa16d49a709ff3ebc4d53f4df19bcb0",
+      "origin": "completed-study",
+      "bytes": 46477
+    },
+    {
+      "path": "experiments/verl_study/study_schedule.py",
+      "sha256": "d40762b78f82896c2c151393e1c255edf1509d76b765ae90d570d50e3d92290b",
+      "origin": "completed-study",
+      "bytes": 8491
+    },
+    {
+      "path": "experiments/verl_study/evaluate_verl_study.py",
+      "sha256": "c1102f7db9603371c5994516db92eb81bd4be9ddf147ef2e0f38805a74426347",
+      "origin": "completed-study",
+      "bytes": 36141
+    },
+    {
+      "path": "experiments/verl_study/evaluate_verl_formal.py",
+      "sha256": "b48c9ad3fe75cb400cbe4b13fcb41ce80f713d37cdc0e1ba879862e51273a73a",
+      "origin": "completed-study",
+      "bytes": 47171
+    },
+    {
+      "path": "experiments/verl_study/prepare_formal_test.py",
+      "sha256": "850d47df2638f22de22e3be965337eb0c995d5dd8c9392af7a3e006d2f58b8a7",
+      "origin": "completed-study",
+      "bytes": 8892
+    },
+    {
+      "path": "experiments/verl_study/run_verl_formal_study.py",
+      "sha256": "9aa364ed03ffbd86db3484f06455a14b50e080172b50a20edddd9c3f89c00e03",
+      "origin": "completed-study",
+      "bytes": 32883
+    },
+    {
+      "path": "experiments/verl_study/formal_child.py",
+      "sha256": "a9d7edaeddb24b7956543bf811102248fc50f562800356bf319bec3c657d31c4",
+      "origin": "completed-study",
+      "bytes": 2301
+    },
+    {
+      "path": "experiments/verl_study/audit_verl_pilot.py",
+      "sha256": "99c4b1e6350948131287d841aaf82b0bbef0bc212e1825f9ebf6df0c8a605931",
+      "origin": "completed-study",
+      "bytes": 38320
+    },
+    {
+      "path": "experiments/verl_study/audit_verl_study.py",
+      "sha256": "718566d0520cc20a5be935091fa4c67be49f1ca40534f96b28f7f84e39dc0f24",
+      "origin": "completed-study",
+      "bytes": 26355
+    },
+    {
+      "path": "experiments/verl_study/audit_verl_study_baselines.py",
+      "sha256": "f2da172cff8154baf6df77b32ce59ef012e70ac7e82723cda95b866947f68da3",
+      "origin": "completed-study",
+      "bytes": 20516
+    },
+    {
+      "path": "experiments/verl_study/audit_verl_formal.py",
+      "sha256": "d78c14839b0d4e89bbdeea36efc05f1e6ebecc3c3f1e67cae9da4ef1cb4038d5",
+      "origin": "completed-study",
+      "bytes": 35200
+    },
+    {
+      "path": "experiments/verl_study/protocol.json",
+      "sha256": "2996f239336d74355a9e6771f2b6bd953fcc9b673b204e66190af2290156078f",
+      "origin": "completed-study",
+      "bytes": 25793
+    },
+    {
+      "path": "experiments/verl_study/protocol_validation.json",
+      "sha256": "041a4b0c6ecac36d34e49eb0d218511c72e7d00f0dc26d92ab84f664efa8eeb3",
+      "origin": "completed-study",
+      "bytes": 3771
+    },
+    {
+      "path": "experiments/verl_study/execution_manifest.json",
+      "sha256": "6c4904d9df9588114de5498fe5f612bc0934a457e04841ecca8622887cbcfbba",
+      "origin": "completed-study",
+      "bytes": 5423
+    },
+    {
+      "path": "experiments/verl_study/formal_test/manifest.json",
+      "sha256": "c0cf14a1b6fb97c23998f3de6a3fd33f71ce106d11f1f1b434348fb4812433b2",
+      "origin": "completed-study",
+      "bytes": 97112
+    },
+    {
+      "path": "experiments/verl_study/analyze_verl_formal.py",
+      "sha256": "7dcf7309049ff873d612ff00aca7be4ba04489cc5162783ed957add448756536",
+      "origin": "final-analysis-snapshot",
+      "bytes": 69403
+    },
+    {
+      "path": "experiments/verl_study/test_analyze_verl_formal_cpu.py",
+      "sha256": "ba38a72f6c8fb33b325fce3894283830c53cf714002806a66fe4c8c34b20f434",
+      "origin": "final-analysis-snapshot",
+      "bytes": 26866
+    },
+    {
+      "path": "experiments/verl_study/test_failed_eval_recovery_analysis_cpu.py",
+      "sha256": "ba5bbad338797ec4be304cef4e2a659b4b894e77ec0fcebb480029b95044fad3",
+      "origin": "final-analysis-snapshot",
+      "bytes": 15831
+    },
+    {
+      "path": "experiments/verl_study/test_formal_supervisor_cpu.py",
+      "sha256": "038a45d5d42adfce90753863b4eb5896dd58ac40d464527c96867e130101ce47",
+      "origin": "final-analysis-snapshot",
+      "bytes": 12236
+    },
+    {
+      "path": "results/evaluation_results.csv",
+      "sha256": "80c7c03e22bfbc1f7f8a73031c40ea23aaefa522a2b24fa2feee3a6119de6d7f",
+      "origin": "audited-formal-results",
+      "bytes": 4244
+    },
+    {
+      "path": "results/method_results.csv",
+      "sha256": "9e9736211c0f3847f2c6b2fb10dc2d2613aec61811407d6345920727e1fcacf2",
+      "origin": "audited-formal-results",
+      "bytes": 972
+    },
+    {
+      "path": "results/paired_contrasts.csv",
+      "sha256": "e7664585b28dbb8cc62ec6ed17e1f81fcd20e27f7c75d457b95594e476fc2af2",
+      "origin": "audited-formal-results",
+      "bytes": 1196
+    },
+    {
+      "path": "results/training_costs.csv",
+      "sha256": "3d1a3b8627b542b52703eae143ca2fb0ab16bf551afdb608a9f6d79c3af359ec",
+      "origin": "audited-formal-results",
+      "bytes": 1511
+    },
+    {
+      "path": "scripts/plot_results.py",
+      "sha256": "aab37c1945e8b852516465894d910694cb36ad56703adc193cada21afce5b580",
+      "origin": "result-figure",
+      "bytes": 4038
+    },
+    {
+      "path": "requirements-figures.txt",
+      "sha256": "12e3d3c71d6161926b7ce4fac2ca20ff83fc55bc2721c53dd002d084c6c532db",
+      "origin": "result-figure",
+      "bytes": 20
+    },
+    {
+      "path": "figures/results.png",
+      "sha256": "09cc5c1eecf8c016cd42494bdfd13c2314d92a30686d67cae911181285d87ad6",
+      "origin": "result-figure",
+      "bytes": 119111
+    }
+  ]
+}

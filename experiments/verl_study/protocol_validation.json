@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "stage": "single_local_gpu_five_method_study",
+  "hardware": {
+    "gpu_count": 1,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "remote_compute_allowed": false,
+    "jobs_run_sequentially": true,
+    "distributed_world_size": 1
+  },
+  "source_config_sha256": "3e1b74a74518305221137630afbf16fb827e7ab4e377e01a04d4f06a4c133831",
+  "source_verl_protocol_sha256": "7c8cfe79b51509d30a61f141de1671bd6256e2442402653a4058f93c77611840",
+  "methods": [
+    "rl",
+    "opd",
+    "joint",
+    "opd_then_rl",
+    "rl_then_opd"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed_meaning": "Different training-data shuffles and generation RNG; one common frozen initial adapter, not independent adapter initializations.",
+  "budget_seconds": 7200,
+  "reserve_seconds": 480,
+  "endpoint_policy": "guarded_ceiling",
+  "overrun_tolerance_fraction": 0.0,
+  "budget_scope": "Common upper training-time allowance on one local GPU; not identical FLOPs or identical consumed time.",
+  "budget_charge": "Contiguous committed-batch elapsed time: snapshots, data selection, generation, reward, old-student/teacher scoring, signals, backward/update, evidence, native checkpoint and checksums.",
+  "separate_costs": "Initial/restart loading and audits; final verification/export; completion-marker/rename/pointer/pruning/log tails; evaluation. Record actual whole-job costs separately.",
+  "unclean_interruption": "Unknown uncommitted work makes a resumed budgeted run ineligible for formal comparison; clean boundary pause/resume preserves eligibility.",
+  "switch_rule": "Sequential methods switch before the next batch after the first committed boundary at or above half the common allowance. Preserve Adam moments, constant LR, model and data cursor; report actual phase shares.",
+  "prompts_per_iteration": 4,
+  "answers_per_prompt": 4,
+  "joint_coefficient": 1.0,
+  "data_order": "Per-seed deterministic full-pool shuffle; consume fresh on-policy question batches; reshuffle on exhaustion.",
+  "evaluation": {
+    "before_training": "Initial student and teacher on all512frozen dev rows",
+    "intermediate": "Same first64dev questions at the half-budget checkpoint, outside training clock",
+    "endpoint": "All512dev questions at the predetermined eligible final checkpoint",
+    "official_test": "All1319test questions for each15finaladapter and initialstudent after protocol frozen; no test access during this preparation stage",
+    "selection": "No best-checkpoint selection or method-specific tuning from endpoint scores",
+    "decode": "Greedy, non-thinking, cap1024newtokens, batch4, frozen rewardv3"
+  },
+  "milestone_fractions": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "research_claim": "Best among five declared configurations on this student/teacher/task under a common local training-time allowance; no universal or hyperparameter-optimized winner claim.",
+  "calibration": {
+    "normal_batch_max_seconds": 137.11398029699922,
+    "stress_batch_seconds": 350.8647258819983,
+    "stress_peak_torch_allocated_gib": 17.29946756362915,
+    "reserve_rule": "ceil_to_60(max(300,2*maximum_normal_batch_seconds,1.25*stress_batch_seconds+30))",
+    "normal_source_sha256": {
+      "runs/verl_pilot_rl_01/metrics.jsonl": "d93a33574a7b21472e08ebb89e50be105fbdb416a3a4ced9d83f33451571922e",
+      "runs/verl_pilot_opd_01/metrics.jsonl": "444823aef40b29d76e63fb5d25bb3242abfd66f218609cec8a59c07c1f5347a7",
+      "runs/verl_pilot_joint_01/metrics.jsonl": "aa18abaa4bef89b08bf7d0b295ab93bbba4e84b50ace294dd2bfc1c68784afa7"
+    },
+    "stress_summary_sha256": "87376586a5073ac882632ce1d3882d798672d614fd9fe42ba12b7bc0f4718436",
+    "stress_is_accuracy_evidence": false,
+    "minimum_utilization_if_guard_stopped_and_valid": 0.9333333333333333
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "stage": "training_pilot",
+  "seed": 42,
+  "models": {
+    "student": {
+      "id": "Qwen/Qwen3-1.7B",
+      "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "local_snapshot": "/home/enci/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+    },
+    "teacher": {
+      "id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "local_snapshot": "/home/enci/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c"
+    }
+  },
+  "prompt_instruction": "Solve the problem and show your calculations. Finish with one plain-text line containing only FINAL_ANSWER: followed by the numeric answer. For example, if the answer were 42, the final line would be: FINAL_ANSWER: 42. Use this label exactly once. The number may be an integer, decimal, or fraction. Do not use a Markdown heading, bold formatting, units, or any text after the final line.\n\n",
+  "data": {
+    "train_file": "data/train.jsonl",
+    "dev_file": "data/dev.jsonl",
+    "train_sha256": "caca2efd9fd7f4311ebf4ac7fa749da4527d2b0586d796fbfaa5084cd4686dd4",
+    "dev_sha256": "0f9b76f9b6fdacdff3e11618f900c306b901fad3675caa4c51b2ecf17fe6e2d5"
+  },
+  "reward": {
+    "version": 3,
+    "module": "reward/text_answer_reward.py",
+    "code_sha256": {
+      "text_reward.py": "36f9f9dde01684527743bc570d8300757932868c268f4e0c8609244a2806c6f3",
+      "text_answer_reward.py": "fa4bc9ab357613dbb7c5f2fce9fb181d809df319c2a8d74beea6361871c27e1e"
+    }
+  },
+  "rollout": {
+    "pilot_questions": 32,
+    "answers_per_question": 4,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": 0,
+    "min_p": 0.0,
+    "max_new_tokens": 1024,
+    "enable_thinking": false
+  },
+  "lora": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.0,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "learning_rate": 1e-05,
+  "formal_budget_seconds": null
+}

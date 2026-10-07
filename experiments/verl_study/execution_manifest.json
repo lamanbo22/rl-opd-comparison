@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "frozen_utc": "2026-10-02T11:21:15.079872+00:00",
+  "authorization": "User requested continue after the formal fifteen-run study overview; local single RTX 5090 only.",
+  "scope": "Execute frozen fifteen training runs, fifteen dev64, fifteen dev512, sixteen official test evaluations, and independent audits.",
+  "protocol_sha256": "2996f239336d74355a9e6771f2b6bd953fcc9b673b204e66190af2290156078f",
+  "original_protocol_modified": false,
+  "source_sha256": {
+    "verl_study/run_verl_formal_study.py": "9aa364ed03ffbd86db3484f06455a14b50e080172b50a20edddd9c3f89c00e03",
+    "verl_study/formal_child.py": "a9d7edaeddb24b7956543bf811102248fc50f562800356bf319bec3c657d31c4",
+    "verl_study/evaluate_verl_formal.py": "b48c9ad3fe75cb400cbe4b13fcb41ce80f713d37cdc0e1ba879862e51273a73a",
+    "verl_study/prepare_formal_test.py": "850d47df2638f22de22e3be965337eb0c995d5dd8c9392af7a3e006d2f58b8a7",
+    "verl_study/audit_verl_formal.py": "d78c14839b0d4e89bbdeea36efc05f1e6ebecc3c3f1e67cae9da4ef1cb4038d5",
+    "verl_study/audit_verl_study.py": "718566d0520cc20a5be935091fa4c67be49f1ca40534f96b28f7f84e39dc0f24",
+    "verl_study/audit_verl_study_baselines.py": "f2da172cff8154baf6df77b32ce59ef012e70ac7e82723cda95b866947f68da3",
+    "verl_study/audit_verl_pilot.py": "99c4b1e6350948131287d841aaf82b0bbef0bc212e1825f9ebf6df0c8a605931"
+  },
+  "formal_test_manifest_sha256": "c0cf14a1b6fb97c23998f3de6a3fd33f71ce106d11f1f1b434348fb4812433b2",
+  "host_source_sha256": {
+    "run_verl_formal_host_ps1": "449f01ef09f2ffaf73633979452f130f8b0ad03f90114255e6fad63aa5ea6f1d"
+  },
+  "test_source_sha256": {
+    "test_formal_supervisor_cpu.py": "038a45d5d42adfce90753863b4eb5896dd58ac40d464527c96867e130101ce47",
+    "test_evaluate_verl_formal_cpu.py": "416b4f83f4eaead8d1fd420fd27bf03bef7d161b65e23f32d02c80b34f1a352e",
+    "test_audit_verl_formal_cpu.py": "448c886b28914b647f43a26db1ed9050e0a0039f18155cb00a1ea466a92e9a51"
+  },
+  "cpu_verification_sha256": {
+    "formal_supervisor_cpu_test.json": "e1b5deed57be1e37f98b748193aca9eea482f215ebab1db0bd973b78b1272d33",
+    "formal_evaluator_cpu_test.json": "bda8c511a1b74a46eb2e08ca2264c955f1ee4916a98f41aa09748d5ab9efd7a5",
+    "formal_audit_cpu_test.json": "644c0068f7c4bdfd6bd0792efafb6f3bc66fe9bce17f2af325ae8b8ad7e322be"
+  },
+  "engineering_evaluator_verification": {
+    "status": "pass",
+    "questions": 64,
+    "correct": 54,
+    "all_generated_tokens_equal_frozen_baseline": true,
+    "separate_process_pause_resume": true,
+    "engineering_only": true,
+    "formal_training_started": false,
+    "evaluator_sha256": "b48c9ad3fe75cb400cbe4b13fcb41ce80f713d37cdc0e1ba879862e51273a73a",
+    "smoke_files_sha256": {
+      "batches/0000.json": "b6e00d5b451220398c3cee4ef102d4855556cf38307c552bbdb063b1f725fabd",
+      "batches/0001.json": "0037c1cee1326f424edfb6d79901fb7dec244f9d8874ba570413343707d462e5",
+      "batches/0002.json": "235844ef563b0975ee6f0e6e5c57c3c1dcc54d6d420f76ebed36a66558a23355",
+      "batches/0003.json": "9712f81c60ae15667ea5d8f2f71a5f046b8b7eb20c0bce5a808b8f00d9a6092b",
+      "batches/0004.json": "17b440f7cf700f3ab2c9d026e43e29b038f63112a08f8f794c157549ed5ad831",
+      "batches/0005.json": "587173504418f8f63c37a2cab19ac96cfe0128ddbab5f91fee0d148e9242af32",
+      "batches/0006.json": "226734d99a76f33d74e64869908772e66e039c71d249d895bc6ebca79615ed5b",
+      "batches/0007.json": "aa36ab2c2411355de6ae77e8fc69c4ca97b9d3fd81e81b03d307f8ef5105168f",
+      "batches/0008.json": "34100d95f0ba34a5808d17200ec5ed5a690c2a09c14ac552d54e1ef298a39269",
+      "batches/0009.json": "5e37686b3efd88a95710b82ee72311c136c16633aedd545086671a9092b3540b",
+      "batches/0010.json": "0e8873a586cec9a60aeaac13f318cde41dc3a89923b41c1160612cf619cc9986",
+      "batches/0011.json": "72ee132b249cce4787a6f2f659559de4cece84031bda5d6a5d52e04963ad8180",
+      "batches/0012.json": "accd0c459300d912613804971c6de9aeee510ddc56a87f7c5dea052f752d9274",
+      "batches/0013.json": "e1f08844087dc1df0dbc9ffabe40acdd20cf823bbafc69dd617cb36313e4c9a3",
+      "batches/0014.json": "f81bab036516f74b4571aa70a7926d58445b308c8ce2e8e7b045b12adebac091",
+      "batches/0015.json": "0bcc6bbde8140ddbac77b874d3e88d2d74f3e8b4439d17400f9ef972abd8fdab",
+      "initial_weights.json": "09291cb1c3134466718afc61a79a44dbe49c17927345022a67de6f2a80aaa6d3",
+      "metadata.json": "78ba4b56ef8b64402abc8922431409210c55b949e6d9e88fa3a4b543f3e91a2a",
+      "responses.jsonl": "4901a1f4dce2e96941b85139b73fbc6f0005cda34f0a3da2a2445d71b4a5c992",
+      "run.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sessions/2026-10-02T111640055110+0000_9a2dcd26.json": "aa179a1647506e8a59fd04c85253bd7d56c168e41e7727d1624eb658c7eb8b92",
+      "sessions/2026-10-02T111734804279+0000_f2fd0efc.json": "7144e20bba47913636feca369b4dc9c7aa11def6f2244e1764d5f46acba02e73",
+      "summary.json": "cc1329551e5ad74788fc113f4949e020a1bcf0a9cab7d3bbeff85a7d74a74b26"
+    },
+    "baseline_responses_sha256": "ba8eb28a422ef6a460387f2dbb0d05b7c8e7baf25d7b36741c45c8e8bc7f8714",
+    "cpu_reaudit_log_sha256": "7083482a2b177a2fbae0a389e2f265c304a514210949b7cc66d0f70bd44a5514"
+  },
+  "power_policy": "A temporary system-awake request is held while the hidden host supervisor is alive; released on exit. No power-plan edits.",
+  "failure_policy": "Stop on the first failure. Resume only verified clean boundaries. No automatic reruns or score-based changes."
+}

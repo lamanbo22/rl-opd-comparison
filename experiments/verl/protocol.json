@@ -1,0 +1,57 @@
+{
+  "stage": "verl_repeated_training_engineering_pilot",
+  "version": 1,
+  "methods": [
+    "rl",
+    "opd",
+    "joint"
+  ],
+  "source_config_sha256": "3e1b74a74518305221137630afbf16fb827e7ab4e377e01a04d4f06a4c133831",
+  "seed": 42,
+  "iterations": 8,
+  "prompts_per_iteration": 4,
+  "answers_per_prompt": 4,
+  "train_selection": "first 32 rows in frozen training order, disjoint blocks of four",
+  "fresh_rollouts": "generated from current adapter at every iteration",
+  "generation_seed_rule": "42 + zero-based training question index",
+  "optimizer": "persistent AdamW, lr=1e-5, weight_decay=0, gradient_norm_cap=1",
+  "zero_signal_rule": "skip optimizer step entirely when all RL signals are zero",
+  "normalization": "per-response token mean, then equal mean of all 16 responses",
+  "truncation_rule": "retain all generated completion tokens; include EOS when present; flag truncation; frozen reward v3",
+  "joint_coefficient": 1.0,
+  "distillation": "detached token-local teacher-minus-old-student log probability",
+  "evaluation": {
+    "selection": "first 64 frozen development rows",
+    "do_sample": false,
+    "num_beams": 1,
+    "max_new_tokens": 1024,
+    "batch_size": 4,
+    "enable_thinking": false,
+    "baseline": "same frozen initial adapter, evaluated once",
+    "post_training": "final adapter of each method"
+  },
+  "timing": "synchronized generation, old-student scoring, teacher scoring and backward/update; audits/checkpoints/setup/eval separate",
+  "formal_equal_budget_study": false,
+  "formal_budget_seconds": null,
+  "planned_resume_check": "RL deliberately pauses at the first completed boundary, then resumes the same 8-iteration run",
+  "no_hyperparameter_selection_from_this_dev_check": true,
+  "source_protocol_sha256": "15fb8524d3912b23d28d7baaad6134e5e2787bf162cbb274488dd5f36801dd66",
+  "verl_commit": "8718ca30a3f002f93b7c4fd99b9b2506718681bc",
+  "training_backend": "verl FSDP engine, one rank, custom synchronous controller",
+  "rollout_backend": "Hugging Face generation of current live student, FSDP full-parameter context",
+  "teacher_backend": "frozen Hugging Face Qwen3-4B; sequential same-GPU exact sampled-token scoring",
+  "installed_but_not_used_for_pilot": [
+    "vLLM rollout server",
+    "Ray distributed controller"
+  ],
+  "initial_adapter": "/home/enci/project/rl_opd_comparison/experiments/runs/pilot_train_rl_01/adapter_initial",
+  "initial_adapter_file_sha256": "41f5b090f3d0037006ebf9aac6b4eacec2b5eea8df1c0f09646cad88114db92b",
+  "precision": "BF16 base and teacher, FP32 LoRA master weights, verl BF16 forward autocast",
+  "comparison_to_previous": "Same mathematical objective and data, different library stack and numerical execution; no bitwise reproduction claim",
+  "generation_api": "Transformers 5.12 has removed use_model_defaults; explicit sampling fields are checked in resolved GenerationConfig",
+  "dependency_overrides": {
+    "numpy": "2.3.5",
+    "nvidia-cusparselt-cu13": "0.8.1"
+  },
+  "dependency_override_reason": "Resolve the upstream lock conflicts with mistral-common numpy<2.4 and torch cusparselt==0.8.1"
+}
