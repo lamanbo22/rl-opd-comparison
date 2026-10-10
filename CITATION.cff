@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this repository if you use its code or experimental results."
+title: "Comparing Reinforcement Learning and On-Policy Distillation under a Common Training-Time Budget"
+authors:
+  - family-names: Zhang
+    given-names: Enci
+type: software
+version: 0.2.0
+date-released: 2026-10-09
+repository-code: "https://github.com/lamanbo22/rl-opd-comparison"
+keywords:
+  - reinforcement learning
+  - on-policy distillation
+  - language models
+  - reproducibility

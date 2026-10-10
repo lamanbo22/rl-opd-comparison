@@ -1,4 +1,4 @@
-"""Synthetic CPU-only checks for the analysis-only failed-evaluation exception."""
+"""CPU tests for failed-evaluation cost accounting and recovery checks."""
 import argparse
 import copy
 import hashlib

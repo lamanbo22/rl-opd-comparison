@@ -1,4 +1,4 @@
-"""Synthetic CPU-only tests for post-study analysis; never imports torch or runs inference."""
+"""CPU tests for study analysis using synthetic evaluation records."""
 import argparse
 import copy
 import hashlib
@@ -204,8 +204,7 @@ class AnalysisTests(unittest.TestCase):
             original,manifest=host_fixture(root,recovery=True)
             status=a.read(root/'host-status.json')
             prior=manifest.parent/'prior-host-status.json'
-            # The recursive reference is structurally cyclic. It must be rejected before
-            # attempting to follow its necessarily inconsistent self-referential digest.
+            # Reject the cycle before following its self-referential digest.
             write(prior,status)
             operation=a.read(manifest)
             operation['prior_host_status_sha256']=sha(prior)

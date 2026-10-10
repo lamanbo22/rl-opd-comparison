@@ -1,7 +1,3 @@
-README*
-**/README*
-*.md
-*.rst
 *.tex
 *.pdf
 *.doc
@@ -10,9 +6,8 @@ README*
 *.txt
 !requirements*.txt
 !**/requirements*.txt
-reports/
-report/
-docs/
+artifacts/
+.setup-tools/
 .venv*/
 __pycache__/
 *.py[cod]

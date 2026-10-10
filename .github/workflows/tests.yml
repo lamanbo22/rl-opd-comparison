@@ -1,0 +1,39 @@
+name: CPU checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements-analysis.txt
+            requirements-figures.txt
+      - name: Install analysis dependencies
+        run: python -m pip install -r requirements-analysis.txt -r requirements-figures.txt
+      - name: Verify released files
+        run: python scripts/verify_release.py
+      - name: Test public commands
+        run: python -m unittest discover -s tests -v
+      - name: Test original analysis and recovery checks
+        run: |
+          python experiments/verl_study/test_analyze_verl_formal_cpu.py --output artifacts/analysis-tests.json
+          python experiments/verl_study/test_failed_eval_recovery_analysis_cpu.py --output artifacts/recovery-tests.json
+          python experiments/verl_study/test_formal_supervisor_cpu.py
+      - name: Reproduce tables and figure
+        run: |
+          python scripts/reproduce_results.py --check
+          python scripts/plot_results.py --results-dir artifacts/reproduced --output artifacts/results.png

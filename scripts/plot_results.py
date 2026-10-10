@@ -1,4 +1,5 @@
-"""Render the README figure from the recorded study tables; no model execution."""
+"""Plot seed accuracies and paired differences from the released results."""
+import argparse
 from pathlib import Path
 import csv
 
@@ -10,20 +11,27 @@ from matplotlib.lines import Line2D
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def rows(name):
-    with (ROOT / "results" / name).open(encoding="utf-8-sig", newline="") as stream:
+def rows(directory, name):
+    with (directory / name).open(encoding="utf-8-sig", newline="") as stream:
         return list(csv.DictReader(stream))
 
 
 def main():
-    methods = rows("method_results.csv")
-    contrasts = rows("paired_contrasts.csv")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--results-dir", type=Path, default=ROOT / "results")
+    parser.add_argument("--output", type=Path, default=ROOT / "figures/results.png")
+    args = parser.parse_args()
+    methods = rows(args.results_dir, "method_results.csv")
+    contrasts = rows(args.results_dir, "paired_contrasts.csv")
+    evaluations = rows(args.results_dir, "evaluation_results.csv")
     labels = {"rl": "RL", "opd": "OPD", "joint": "Joint RL + OPD",
               "opd_then_rl": "OPD → RL", "rl_then_opd": "RL → OPD",
               "initial_student": "Initial student"}
     by_method = {row["method"]: row for row in methods}
     order = list(labels)[:-1]
-    baseline = 100 * 1035 / 1319
+    initial = next(row for row in evaluations
+                   if row["split"] == "test" and row["name"] == "verl_study_initial_test_01")
+    baseline = 100 * int(initial["correct"]) / int(initial["questions"])
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11,
                          "axes.spines.top": False, "axes.spines.right": False})
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(14, 5.5), gridspec_kw={"wspace": .49})
@@ -37,7 +45,7 @@ def main():
         ax.scatter(float(row["mean_accuracy_percent"]), i, marker="D", s=47,
                    facecolor=ink, edgecolor="white", linewidth=.6, zorder=4)
     ax.axvline(baseline, color="#7C858F", linestyle="--", linewidth=1.3)
-    ax.text(baseline + .06, -.53, "Initial student: 78.47%", fontsize=9, color="#58636F")
+    ax.text(baseline + .06, -.53, f"Initial student: {baseline:.2f}%", fontsize=9, color="#58636F")
     ax.set(yticks=range(5), yticklabels=[labels[x] for x in order],
            xlabel="Official test accuracy (%)", xlim=(77.9, 81.45), ylim=(4.55, -.9))
     ax.set_title("Accuracy across three training seeds", loc="left", pad=20, weight="bold")
@@ -66,11 +74,10 @@ def main():
     fig.subplots_adjust(left=.115, right=.985, top=.83, bottom=.25)
     fig.text(.115, .035, "1,319 test questions · 3 training seeds · Intervals: descriptive, unadjusted 95% crossed bootstrap",
              fontsize=10, color="#58636F")
-    target = ROOT / "figures"
-    target.mkdir(exist_ok=True)
-    fig.savefig(target / "results.png", dpi=180, facecolor="white")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(args.output, dpi=180, facecolor="white")
     plt.close(fig)
-    print(f"Saved {target / 'results.png'}")
+    print(f"Saved {args.output}")
 
 
 if __name__ == "__main__":

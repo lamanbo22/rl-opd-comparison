@@ -1,9 +1,7 @@
-"""CPU-only final analysis of the frozen fifteen-run study.
+"""Audit and analyze the completed fifteen-run study on CPU.
 
-This is reporting code, not part of the frozen training/evaluation program.
-It never launches inference, changes evidence, or selects checkpoints by score.
-All 122 supervisor jobs must have completed before any result is exported.
-Requires only Python and numpy; run in the existing .venv-verl environment.
+Requires all 122 supervisor jobs and their recorded evidence. Uses NumPy
+for paired bootstrap estimates and exports results without model inference.
 """
 import argparse
 import copy
@@ -176,7 +174,7 @@ def attempt_ledger(project, entry, hashes, authorized_failed_evals=None):
             require(status in ('complete', 'paused', 'paused_before_work', 'supervisor_recovery'), 'Unclean job attempt')
         log = contained(project, attempt['log'])
         if status == 'supervisor_recovery':
-            # A clean child may outlive a dead supervisor. Its final independent audit is still required.
+            # A completed child still needs its final audit after supervisor recovery.
             require(attempt.get('process_wall_seconds') is None and attempt.get('whole_job_wall_seconds') is None,
                     'Recovered attempt falsely claims exact cost')
             log_hash = hashes.sha(log)  # observed now; not a contemporaneous exit receipt
@@ -589,11 +587,7 @@ def cost_totals(jobs, sessions):
 
 
 def failed_eval_recovery(project, operation_path, operation, manifest_sha, hashes):
-    """Verify the single user-authorized, cost-only failed evaluation archive.
-
-    This cannot make an archived partial evaluation eligible for accuracy.
-    The ordinary evaluator/audit checks still apply to the fresh run in full.
-    """
+    """Verify the approved failed-evaluation archive and retain its cost only."""
     require(project is not None, 'Failed evaluation recovery needs the project evidence root')
     project = Path(project).resolve()
     parent = operation_path.parent
@@ -784,8 +778,7 @@ def host_operations(path, manifest_sha, hashes, project=None):
         status=json.loads(contents)
         history=verify_status(status)
         if history:
-            # Chronological, unique operation manifests. An older sleep incident appears
-            # exactly once even when later routine resumes reference that history.
+            # Count each incident once across the resume history.
             incidents=[dict(operation_manifest_relative=item['manifest_relative'],incident=item['incident'],
                 utc_minus_recorded_process_seconds=item['utc_minus_recorded_process_seconds'])
                 for item in history if item['incident'] is not None]
@@ -874,7 +867,7 @@ def analyze(project,host_operations_manifest=None):
             phase_fraction_by_seed=[dict(seed=r['seed'],**r['costs']['phase_fractions']) for r in sorted(rr,key=lambda x:x['seed'])],
             actual_updates=sum(r['counts']['actual_optimizer_steps'] for r in rr),
             generated_training_tokens=sum(r['counts']['generated_tokens'] for r in rr)))
-    # Keep masks/pairing identities compact in the exported evidence, not 20k bootstrap draws.
+    # Export outcome and question-order hashes.
     for result in evaluations.values():
         result['correct_mask_sha256']=hashlib.sha256(result.pop('predictions').tobytes()).hexdigest()
         result['ordered_question_ids_sha256']=canonical(result.pop('question_ids'),unicode=True)
